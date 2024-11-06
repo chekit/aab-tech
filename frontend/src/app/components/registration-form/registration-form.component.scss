@@ -31,6 +31,7 @@ $input-mv: 24 * $base-step;
 
   &__group {
     display: flex;
+    flex-direction: column;
     gap: $base-step;
     margin: 0 0 $base-step * 2;
   }
@@ -65,8 +66,8 @@ $input-mv: 24 * $base-step;
 
   &__button {
     margin: 0;
-    padding: math.div($base-step, 2) $base-step;
-    min-width: 100px;
+    padding: $base-step;
+    min-width: 120px;
     border: 1px solid #aaa;
     border-radius: 8px;
     color: #5d5d5d;
