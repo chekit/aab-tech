@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  &.is-error {
+    background-color: #f6a9a9;
+    border-color: #b86060;
+  }
+
+  &.is-successful {
+    background-color: #73f79a;
+    border-color: #4da367;
+  }
+}

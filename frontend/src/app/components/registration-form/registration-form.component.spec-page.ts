@@ -11,6 +11,22 @@ export class RegistrationFormPage {
   }
 
   get submitButton() {
-    return this.de.query(By.css('[data-test="submit-button"]'));
+    return this.fetchNativeElement<HTMLButtonElement>('[data-test="submit-button"]');
+  }
+  get inputUsername() {
+    return this.fetchNativeElement<HTMLInputElement>('[data-test="input-username"]');
+  }
+  get inputPassword() {
+    return this.fetchNativeElement<HTMLInputElement>('[data-test="input-password"]');
+  }
+  get inputEmail() {
+    return this.fetchNativeElement<HTMLInputElement>('[data-test="input-email"]');
+  }
+  get inputFullname() {
+    return this.fetchNativeElement<HTMLInputElement>('[data-test="input-fullname"]');
+  }
+
+  private fetchNativeElement<T>(selector: string): T {
+    return this.de.query(By.css(selector)).nativeElement;
   }
 }

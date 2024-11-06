@@ -1,6 +1,17 @@
+@if (state().error) {
+  <app-notification [type]="NotificationType.ERROR">
+    {{ state().error?.message }}
+  </app-notification>
+}
+
+@if (state().registered) {
+  <app-notification [type]="NotificationType.SUCCESSFUL"> Done </app-notification>
+}
+
 <form
   class="form"
-  action=""
+  [formGroup]="registrationForm"
+  (submit)="register()"
 >
   <fieldset class="fieldset">
     <div class="form__group">
@@ -14,6 +25,8 @@
         class="form__input"
         type="text"
         placeholder="Enter your username"
+        formControlName="username"
+        data-test="input-username"
         required
       />
     </div>
@@ -28,6 +41,8 @@
         class="form__input"
         type="password"
         placeholder="Specify the password"
+        formControlName="password"
+        data-test="input-password"
         required
       />
     </div>
@@ -42,6 +57,8 @@
         class="form__input"
         type="email"
         placeholder="Enter your email"
+        formControlName="email"
+        data-test="input-email"
         required
       />
     </div>
@@ -55,6 +72,8 @@
         id="fullname"
         class="form__input"
         type="text"
+        formControlName="fullname"
+        data-test="input-fullname"
         placeholder="Provide your full name"
       />
     </div>
@@ -70,7 +89,7 @@
       class="form__button"
       type="submit"
       data-test="submit-button"
-      disabled
+      [disabled]="!(isValid$ | async)"
     >
       Submit
     </button>

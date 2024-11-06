@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { of } from 'rxjs';
+import { RegistrationService } from '../../core/services/registration.service';
 import { RegistrationFormComponent } from './registration-form.component';
 import { RegistrationFormPage } from './registration-form.component.spec-page';
 
@@ -11,6 +13,14 @@ describe('RegistrationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegistrationFormComponent],
+      providers: [
+        {
+          provide: RegistrationService,
+          useValue: {
+            register: () => of({}),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegistrationFormComponent);
@@ -24,6 +34,21 @@ describe('RegistrationFormComponent', () => {
   });
 
   it('should disable submit button by default', () => {
-    expect(page.submitButton.nativeElement.disabled).toBeTruthy();
+    expect(page.submitButton.disabled).toBeTruthy();
   });
+
+  it('should enable submit button once form filled in', () => {
+    setInputValue(page.inputUsername, 'test');
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    expect(page.submitButton.disabled).toBeFalsy();
+  });
+
+  function setInputValue(el: HTMLInputElement, value: string): void {
+    el.value = value;
+    el.dispatchEvent(new Event('input'));
+  }
 });
