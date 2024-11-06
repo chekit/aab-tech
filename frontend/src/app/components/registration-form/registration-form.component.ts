@@ -40,6 +40,7 @@ export class RegistrationFormComponent {
   });
 
   isValid$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
+  isPrestine$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
 
   protected register(): void {
     this.state.update(state => ({ ...state, error: null, registered: null }));

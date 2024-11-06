@@ -1,5 +1,23 @@
 @use "sass:math";
 
+$base-step: 10px;
+$label-mv: 12 * $base-step;
+$input-mv: 24 * $base-step;
+
+:host {
+  width: $base-step * 50;
+  margin: 0 auto;
+  display: block;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: $base-step;
+}
+
+.h1 {
+  margin: 0 0 1em;
+  text-align: center;
+}
+
 .fieldset {
   padding: 0;
   margin: 0;
@@ -7,10 +25,6 @@
 }
 
 .form {
-  $base-step: 10px;
-  $label-mv: 12 * $base-step;
-  $input-mv: 24 * $base-step;
-
   margin: 0 auto;
   padding: 0 $base-step;
   width: $label-mv + $input-mv + $base-step * 3;

@@ -1,3 +1,5 @@
+<h1 class="h1">Registration form</h1>
+
 @if (state().error) {
   <app-notification
     [type]="NotificationType.ERROR"
@@ -90,8 +92,10 @@
     <button
       class="form__button"
       type="reset"
+      data-test="reset-button"
+      [disabled]="registrationForm.pristine"
     >
-      Cancel
+      Reset
     </button>
     <button
       class="form__button"
