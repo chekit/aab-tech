@@ -34,8 +34,9 @@
   }
 
   &__input {
-    padding: $base-step / 2;
+    padding: $base-step / 2 $base-step;
     min-width: $input-mv;
+    line-height: 2em;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
@@ -75,6 +76,20 @@
 
       &:active {
         background-color: darken($color: #00AB95, $amount: 10);
+      }
+    }
+
+    &[disabled] {
+      background-color: #ccc;
+      color: #aaa;
+      border-color: #f3f3f3;
+      cursor: default;
+
+      &:active,
+      &:hover {
+        background-color: #ccc;
+        color: #aaa;
+        border-color: #f3f3f3;
       }
     }
   }
