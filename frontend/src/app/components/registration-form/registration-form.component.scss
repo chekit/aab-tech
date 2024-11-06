@@ -1,0 +1,81 @@
+.fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.form {
+  $base-step: 10px;
+  $label-mv: 12 * $base-step;
+  $input-mv: 24 * $base-step;
+
+  margin: 0 auto;
+  padding: 0 $base-step;
+  width: $label-mv + $input-mv + $base-step * 3;
+
+  &__group {
+    display: flex;
+    gap: $base-step;
+    margin: 0 0 $base-step * 2;
+  }
+
+  &__label {
+    min-width: $label-mv;
+    cursor: pointer;
+
+    &:has(+input[required]):after {
+      margin: 0 0 0 $base-step / 2;
+      content: '*'
+    }
+
+    &:hover {
+      color: lighten($color: #000000, $amount: 30)
+    }
+  }
+
+  &__input {
+    padding: $base-step / 2;
+    min-width: $input-mv;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  &__manage {
+    display: flex;
+    justify-content: flex-end;
+    gap: $base-step;
+  }
+
+  &__button {
+    margin: 0;
+    padding: $base-step / 2 $base-step;
+    min-width: 100px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    color: #5d5d5d;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($color: rgb(239, 239, 239), $amount: 5);
+    }
+
+    &:active {
+      background-color: darken($color: rgb(239, 239, 239), $amount: 10);
+    }
+
+    &[type=submit] {
+      background-color: #00AB95;
+      border-color: #007066;
+      color: white;
+
+      &:hover {
+        background-color: darken($color: #00AB95, $amount: 5);
+      }
+
+      &:active {
+        background-color: darken($color: #00AB95, $amount: 10);
+      }
+    }
+  }
+}

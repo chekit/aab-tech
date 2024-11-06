@@ -1,0 +1,15 @@
+{
+  "name": "aab_tech_task",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run --prefix ./backend start\" \"npm run --prefix ./frontend start\""
+  },
+  "private": "true",
+  "author": "Anton Cherepov",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
