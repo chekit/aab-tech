@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .fieldset {
   padding: 0;
   margin: 0;
@@ -24,7 +26,7 @@
     cursor: pointer;
 
     &:has(+input[required]):after {
-      margin: 0 0 0 $base-step / 2;
+      margin: 0 0 0 math.div($base-step, 2);
       content: '*'
     }
 
@@ -34,7 +36,7 @@
   }
 
   &__input {
-    padding: $base-step / 2 $base-step;
+    padding: math.div($base-step, 2) $base-step;
     min-width: $input-mv;
     line-height: 2em;
     border: 1px solid #ccc;
@@ -49,7 +51,7 @@
 
   &__button {
     margin: 0;
-    padding: $base-step / 2 $base-step;
+    padding: math.div($base-step, 2) $base-step;
     min-width: 100px;
     border: 1px solid #aaa;
     border-radius: 8px;
