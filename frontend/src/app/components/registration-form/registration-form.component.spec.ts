@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { of } from 'rxjs';
-import { RegistrationService } from '../../core/services/registration.service';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { RegistrationFormComponent } from './registration-form.component';
 import { RegistrationFormPage } from './registration-form.component.spec-page';
 
@@ -13,14 +13,7 @@ describe('RegistrationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegistrationFormComponent],
-      providers: [
-        {
-          provide: RegistrationService,
-          useValue: {
-            register: () => of({}),
-          },
-        },
-      ],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegistrationFormComponent);
@@ -46,6 +39,63 @@ describe('RegistrationFormComponent', () => {
 
     expect(page.submitButton.disabled).toBeFalsy();
   });
+
+  it('should disable submit button once required field reset', () => {
+    setInputValue(page.inputUsername, 'test');
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    expect(page.submitButton.disabled).toBeFalsy();
+
+    setInputValue(page.inputPassword, '');
+
+    fixture.detectChanges();
+
+    expect(page.submitButton.disabled).toBeTruthy();
+  });
+
+  it('should show error notification if service fails', fakeAsync(() => {
+    setInputValue(page.inputUsername, 'test');
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    const ctrl = TestBed.inject(HttpTestingController);
+
+    page.submitButton.click();
+
+    const req = ctrl.expectOne('http://localhost:3000/register');
+    req.error(new ProgressEvent('Test error'));
+
+    tick();
+    fixture.detectChanges();
+
+    expect(page.errorNotification).toBeTruthy();
+  }));
+
+  it('should show successful notification if data sent successfully', fakeAsync(() => {
+    setInputValue(page.inputUsername, 'test');
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    const ctrl = TestBed.inject(HttpTestingController);
+
+    page.submitButton.click();
+
+    const req = ctrl.expectOne('http://localhost:3000/register');
+    req.flush({ status: 'success', message: 'Registration data received successfully' });
+
+    tick();
+    fixture.detectChanges();
+
+    expect(page.successNotification).toBeTruthy();
+    expect(page.successNotification.textContent?.trim()).toBe('Registration data received successfully');
+  }));
 
   function setInputValue(el: HTMLInputElement, value: string): void {
     el.value = value;

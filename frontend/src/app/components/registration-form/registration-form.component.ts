@@ -5,7 +5,13 @@ import { map } from 'rxjs';
 import { RegistrationService } from '../../core/services/registration.service';
 import { NotificationType } from '../../shared/components/notification/models/notification-type';
 import { NotificationComponent } from '../../shared/components/notification/notification.component';
+import { RegistrationResponse } from '../../shared/models';
 import { RegistrationData } from '../../shared/models/registration-data';
+
+interface ComponentState {
+  error: Error | null;
+  registered: RegistrationResponse | null;
+}
 
 @Component({
   selector: 'app-registration-form',
@@ -20,9 +26,9 @@ export class RegistrationFormComponent {
 
   NotificationType = NotificationType;
 
-  protected state = signal<{ error: Error | null; registered: boolean }>({
+  protected state = signal<ComponentState>({
     error: null,
-    registered: false,
+    registered: null,
   });
 
   // @TODO: Implement typed forms
@@ -36,11 +42,16 @@ export class RegistrationFormComponent {
   isValid$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
 
   protected register(): void {
-    this.state.update(state => ({ ...state, error: null }));
+    this.state.update(state => ({ ...state, error: null, registered: null }));
 
     this.registrationService.register(this.registrationForm.value as RegistrationData).subscribe({
-      next: value => this.state.update(state => ({ ...state, registered: true })),
-      error: error => this.state.update(state => ({ ...state, error })),
+      next: value => {
+        this.state.update(state => ({ ...state, registered: value }));
+        this.registrationForm.reset();
+      },
+      error: ({ error }) => {
+        this.state.update(state => ({ ...state, error }));
+      },
     });
   }
 }

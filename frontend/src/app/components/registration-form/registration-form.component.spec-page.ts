@@ -26,6 +26,14 @@ export class RegistrationFormPage {
     return this.fetchNativeElement<HTMLInputElement>('[data-test="input-fullname"]');
   }
 
+  get errorNotification() {
+    return this.fetchNativeElement<HTMLElement>('[data-test="error-notification"]');
+  }
+
+  get successNotification() {
+    return this.fetchNativeElement<HTMLElement>('[data-test="success-notification"]');
+  }
+
   private fetchNativeElement<T>(selector: string): T {
     return this.de.query(By.css(selector)).nativeElement;
   }

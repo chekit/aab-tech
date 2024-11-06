@@ -1,11 +1,19 @@
 @if (state().error) {
-  <app-notification [type]="NotificationType.ERROR">
-    {{ state().error?.message }}
+  <app-notification
+    [type]="NotificationType.ERROR"
+    data-test="error-notification"
+  >
+    {{ state().error?.message ?? 'Something went wrong. Please try again later.' }}
   </app-notification>
 }
 
 @if (state().registered) {
-  <app-notification [type]="NotificationType.SUCCESSFUL"> Done </app-notification>
+  <app-notification
+    [type]="NotificationType.SUCCESSFUL"
+    data-test="success-notification"
+  >
+    {{ state().registered?.message }}
+  </app-notification>
 }
 
 <form

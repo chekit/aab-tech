@@ -8,6 +8,4 @@ import { RegistrationFormComponent } from './components';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'aab-registration-form';
-}
+export class AppComponent {}

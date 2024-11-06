@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RegistrationData } from '../../shared/models/registration-data';
+import { RegistrationData, RegistrationResponse } from '../../shared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { RegistrationData } from '../../shared/models/registration-data';
 export class RegistrationService {
   private http = inject(HttpClient);
 
-  register(dto: RegistrationData): Observable<any> {
-    return this.http.post('http://localhost:3000/register', dto);
+  register(dto: RegistrationData): Observable<RegistrationResponse> {
+    return this.http.post<RegistrationResponse>('http://localhost:3000/register', dto);
   }
 }
