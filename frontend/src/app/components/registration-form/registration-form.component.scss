@@ -48,6 +48,10 @@ $input-mv: 24 * $base-step;
     &:hover {
       color: lighten($color: #000000, $amount: 30)
     }
+
+    &.is-error {
+      color: #ff3737;
+    }
   }
 
   &__input {
@@ -56,23 +60,33 @@ $input-mv: 24 * $base-step;
     line-height: 2em;
     border: 1px solid #ccc;
     border-radius: 5px;
+
+    &.is-error {
+      border-color: #ff3737;
+    }
   }
 
   &__manage {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     gap: $base-step;
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
   }
 
   &__button {
+    flex: auto;
     margin: 0;
     padding: $base-step;
-    min-width: 120px;
     border: 1px solid #aaa;
     border-radius: 8px;
     color: #5d5d5d;
     transition: all .15s ease-in-out;
     cursor: pointer;
+
 
     &:hover {
       background-color: darken($color: rgb(239, 239, 239), $amount: 5);
@@ -109,5 +123,11 @@ $input-mv: 24 * $base-step;
         border-color: #f3f3f3;
       }
     }
+  }
+
+  &__error {
+    margin: 0;
+    color: #ff3737;
+    font-size: .8em;
   }
 }

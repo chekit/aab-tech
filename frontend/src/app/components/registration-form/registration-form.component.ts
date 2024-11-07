@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map } from 'rxjs';
@@ -16,7 +16,7 @@ interface ComponentState {
 @Component({
   selector: 'app-registration-form',
   standalone: true,
-  imports: [ReactiveFormsModule, AsyncPipe, NotificationComponent],
+  imports: [ReactiveFormsModule, AsyncPipe, NotificationComponent, NgClass],
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.scss',
 })
@@ -31,16 +31,19 @@ export class RegistrationFormComponent {
     registered: null,
   });
 
-  // @TODO: Implement typed forms
-  protected registrationForm = this.fb.group({
-    username: ['', [Validators.required, Validators.maxLength(140)]],
-    password: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    fullname: ['', [Validators.maxLength(140)]],
-  });
+  protected registrationForm = this.fb.nonNullable.group(
+    {
+      username: ['', [Validators.required, Validators.maxLength(140)]],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(/[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/gi)]],
+      fullname: [''],
+    },
+    {
+      updateOn: 'blur',
+    }
+  );
 
-  isValid$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
-  isPrestine$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
+  isFormValid$ = this.registrationForm.statusChanges.pipe(map(status => status === 'VALID'));
 
   protected register(): void {
     this.state.update(state => ({ ...state, error: null, registered: null }));

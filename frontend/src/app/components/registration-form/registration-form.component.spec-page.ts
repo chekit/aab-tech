@@ -34,7 +34,15 @@ export class RegistrationFormPage {
     return this.fetchNativeElement<HTMLElement>('[data-test="success-notification"]');
   }
 
+  get usernameLengthError() {
+    return this.fetchNativeElement<HTMLElement>('[data-test="username-length-error"]');
+  }
+
+  get emailFormatError() {
+    return this.fetchNativeElement<HTMLElement>('[data-test="email-format-error"]');
+  }
+
   private fetchNativeElement<T>(selector: string): T {
-    return this.de.query(By.css(selector)).nativeElement;
+    return this.de.query(By.css(selector))?.nativeElement;
   }
 }

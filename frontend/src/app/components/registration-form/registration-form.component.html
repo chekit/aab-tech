@@ -25,20 +25,32 @@
 >
   <fieldset class="fieldset">
     <div class="form__group">
+      @let hasLengthError = registrationForm.get('username')?.hasError('maxlength');
+
       <label
         class="form__label"
+        [ngClass]="{ 'is-error': hasLengthError }"
         for="username"
         >Username</label
       >
       <input
         id="username"
         class="form__input"
+        [ngClass]="{ 'is-error': hasLengthError }"
         type="text"
         placeholder="Enter your username"
         formControlName="username"
         data-test="input-username"
         required
       />
+      @if (hasLengthError) {
+        <p
+          class="form__error"
+          data-test="username-length-error"
+        >
+          The user name is too long. The maximum length is 140 symbols.
+        </p>
+      }
     </div>
     <div class="form__group">
       <label
@@ -57,20 +69,32 @@
       />
     </div>
     <div class="form__group">
+      @let hasFormatError = registrationForm.get('email')?.hasError('pattern');
+
       <label
         class="form__label"
+        [ngClass]="{ 'is-error': hasFormatError }"
         for="email"
         >Email</label
       >
       <input
         id="email"
         class="form__input"
+        [ngClass]="{ 'is-error': hasFormatError }"
         type="email"
         placeholder="Enter your email"
         formControlName="email"
         data-test="input-email"
         required
       />
+      @if (hasFormatError) {
+        <p
+          class="form__error"
+          data-test="email-format-error"
+        >
+          The email seems to be incorrect. Please verify.
+        </p>
+      }
     </div>
     <div class="form__group">
       <label
@@ -101,7 +125,7 @@
       class="form__button"
       type="submit"
       data-test="submit-button"
-      [disabled]="!(isValid$ | async)"
+      [disabled]="!(isFormValid$ | async)"
     >
       Submit
     </button>

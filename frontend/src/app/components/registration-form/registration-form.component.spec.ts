@@ -97,8 +97,57 @@ describe('RegistrationFormComponent', () => {
     expect(page.successNotification.textContent?.trim()).toBe('Registration data received successfully');
   }));
 
+  it('should show username length error', () => {
+    setInputValue(page.inputUsername, 'test'.repeat(140));
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    expect(page.usernameLengthError).toBeTruthy();
+
+    setInputValue(page.inputUsername, 'test');
+
+    fixture.detectChanges();
+
+    expect(page.usernameLengthError).toBeFalsy();
+  });
+
+  it('should show email format error', () => {
+    setInputValue(page.inputUsername, 'test');
+    setInputValue(page.inputPassword, 'test');
+    setInputValue(page.inputEmail, 'test@test.');
+
+    fixture.detectChanges();
+
+    expect(page.emailFormatError).toBeTruthy();
+
+    setInputValue(page.inputEmail, 'test');
+
+    fixture.detectChanges();
+
+    expect(page.emailFormatError).toBeTruthy();
+
+    setInputValue(page.inputEmail, 'test@test.nl');
+
+    fixture.detectChanges();
+
+    expect(page.emailFormatError).toBeFalsy();
+  });
+
+  it("should add 'is-error' class if there is input error", () => {
+    setInputValue(page.inputUsername, 'test'.repeat(140));
+    setInputValue(page.inputEmail, 'test@test.');
+
+    fixture.detectChanges();
+
+    expect(page.inputUsername.classList).toContain('is-error');
+    expect(page.inputEmail.classList).toContain('is-error');
+  });
+
   function setInputValue(el: HTMLInputElement, value: string): void {
     el.value = value;
     el.dispatchEvent(new Event('input'));
+    el.dispatchEvent(new Event('blur'));
   }
 });
