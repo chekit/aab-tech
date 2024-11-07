@@ -8,7 +8,7 @@ $input-mv: 24 * $base-step;
   width: $base-step * 50;
   margin: 0 auto;
   display: block;
-  padding: 50px;
+  padding: $base-step * 5;
   border: 1px solid #ccc;
   border-radius: $base-step;
 }
