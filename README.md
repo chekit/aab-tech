@@ -20,4 +20,5 @@ I decided to adjust `server.js`, since variant 2 didn't work for me and using ex
 
 # Form validation
 
-Form validation happens on "Blur".
+- Form validation happens on "Blur".
+- For email `Validators.pattern` used in favor of `Validators.email`, because `Validators.email` considers values like `test@test` as valid email.
